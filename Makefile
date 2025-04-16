@@ -19,7 +19,7 @@ SRC = char_manip/ft_isalpha.c char_manip/ft_isdigit.c char_manip/ft_isalnum.c\
 SRCEXT = .c
 OBJEXT = .o
 OBJS = $(addprefix $(OBJDIR)/,$(SRC:$(SRCEXT)=$(OBJEXT)))
-OBJOUT = $(addprefix $(OBJDIR)/,$(notdir $(OBJ)))
+OBJOUT = $(addprefix $(OBJDIR)/,$(notdir $(OBJS)))
 CC        = gcc
 RM        = rm -f
 CFLAGS = -Wall -Wextra -Werror -g -I./
