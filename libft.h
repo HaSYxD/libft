@@ -6,7 +6,7 @@
 /*   By: afromont <afromont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:15:24 by aliaudet          #+#    #+#             */
-/*   Updated: 2025/04/24 16:15:19 by hasyxd           ###   ########.fr       */
+/*   Updated: 2025/04/24 16:18:54 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void *	ft_calloc(size_t nmemb, size_t size);
 void	ft_close(int n_args, ...);
 void	ft_free(void *ptr);
 
+size_t	ft_strinstcount(const char *str, const char c);
 size_t	ft_strlenc(const char *str, const char c);
 size_t	ft_strcount(char **s);
 size_t	ft_strlen(const char *s);
