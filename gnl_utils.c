@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   gnl_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aliaudet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 09:31:31 by aliaudet          #+#    #+#             */
-/*   Updated: 2023/11/20 16:12:48 by aliaudet         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:49:15 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_gnlstrlen(const char *str)
 	return (i);
 }
 
-char	*ft_gnlstrjoin(char *s1, char *s2, t_garb *gc)
+char	*ft_gnlstrjoin(char *s1, char *s2, arena_t *a)
 {
 	size_t	i;
 	size_t	j;
@@ -32,12 +32,12 @@ char	*ft_gnlstrjoin(char *s1, char *s2, t_garb *gc)
 
 	if (!s1)
 	{
-		s1 = allocate(1 * sizeof(char), gc);
+		s1 = arena_allocate(1 * sizeof(char), a);
 		s1[0] = '\0';
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	dst = allocate(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1), gc);
+	dst = arena_allocate(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1), a);
 	if (!dst)
 		return (NULL);
 	i = -1;

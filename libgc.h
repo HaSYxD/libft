@@ -6,7 +6,7 @@
 /*   By: aliaudet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:39:00 by aliaudet          #+#    #+#             */
-/*   Updated: 2024/07/02 18:42:02 by aliaudet         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:32:13 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# ifndef C_DEFAULT
-#  define C_DEFAULT	"\033[0m"
-# endif
-# ifndef C_RED
-#  define C_RED		"\033[0;31m"
-# endif
-# ifndef C_GREEN
-#  define C_GREEN	"\033[0;32m"
-# endif
-# ifndef C_YELLOW
-#  define C_YELLOW	"\033[0;33m"
-# endif
-# ifndef C_CYAN
-#  define C_CYAN	"\033[0;36m"
-# endif
-
-# ifndef DEBUG
-#  define DEBUG	0
-# endif
 
 typedef struct s_ptr
 {

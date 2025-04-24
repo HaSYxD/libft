@@ -6,11 +6,13 @@
 /*   By: hasyxd <aliaudet@student.42lehavre.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 01:45:39 by hasyxd            #+#    #+#             */
-/*   Updated: 2025/04/24 02:57:30 by hasyxd           ###   ########.fr       */
+/*   Updated: 2025/04/24 14:07:19 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <arena.h>
+
+uint8_t	g_arena_err = NONE;
 
 static void *	__arena_return_err(const uint8_t err)
 {
@@ -23,7 +25,7 @@ arena_t *	arena_init(const size_t blksize)
 	// Check for user input error
 	if (blksize == 0)
 		return __arena_return_err(INITERR_TOSMALL);
-	if (blksize > __ARENA_MAX_SIZEBLK)
+	if (blksize > _ARENA_MAX_SIZEBLK)
 		return __arena_return_err(INITERR_TOBIG);
 
 	// Allocate the Arena funtion pointer
@@ -33,7 +35,7 @@ arena_t *	arena_init(const size_t blksize)
 
 	// Allocate the arena first block pointer
 	arena->_blksize = blksize;
-	arena->_blks = malloc(sizeof(arenablk_t));
+	arena->_blks = malloc(sizeof(P_arenablk_t));
 	if (arena->_blks == NULL) {
 		free(arena);
 		return __arena_return_err(ALLOCERR_MALLOCFAILED);
@@ -62,13 +64,13 @@ void *		arena_allocate(const size_t size, arena_t *arena)
 	if (size > arena->_blksize)
 		return __arena_return_err(ALLOCERR_TOBIG);
 
-	arenablk_t *	start = arena->_blks;
+	P_arenablk_t *	start = arena->_blks;
 	void *		allocptr = NULL;
 	
-	while (arena->_blks->_next) {
+	while (arena->_blks) {
 		size_t	free_mem = arena->_blksize - arena->_blks->_capacity;
 		if (arena->_blks->_next == NULL && size > free_mem) {
-			arena->_blks->_next = malloc(sizeof(arenablk_t));
+			arena->_blks->_next = malloc(sizeof(P_arenablk_t));
 			if (arena->_blks->_next == NULL) {
 				arena->_blks = start;
 				return __arena_return_err(ALLOCERR_MALLOCFAILED);
@@ -96,9 +98,35 @@ void *		arena_allocate(const size_t size, arena_t *arena)
 	return (allocptr);
 }
 
-void		arena_destroy(arena_t *arena);
+void		arena_destroy(arena_t *arena)
+{
+	if (arena == NULL)
+		return (void)__arena_return_err(ARGERR_INVALIDARENA);
+
+	while (arena->_blks) {
+		P_arenablk_t *	next = arena->_blks->_next;
+		
+		free(arena->_blks->_data);
+		free(arena->_blks);
+		arena->_blks = next;
+	}
+	free(arena);
+}
 
 char *	arena_geterrlog(const uint8_t err)
 {
-	return (__ARENA_ERR_DICT[err]);
+	return (_ARENA_ERR_DICT[err]);
+}
+
+size_t	arena_getblks_count(arena_t *arena)
+{
+	P_arenablk_t *	begin = arena->_blks;
+	size_t		count = 0;
+
+	while (arena->_blks) {
+		count++;
+		arena->_blks = arena->_blks->_next;
+	}
+	arena->_blks = begin;
+	return (count);
 }

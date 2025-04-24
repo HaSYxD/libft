@@ -6,13 +6,13 @@
 /*   By: aliaudet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:49:09 by aliaudet          #+#    #+#             */
-/*   Updated: 2023/10/25 11:12:37 by aliaudet         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:43:58 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2, t_garb *gc)
+char	*ft_strjoin(const char *s1, const char *s2, arena_t *a)
 {
 	size_t	len;
 	char	*dst;
@@ -22,7 +22,7 @@ char	*ft_strjoin(const char *s1, const char *s2, t_garb *gc)
 	i = 0;
 	j = ft_strlen(s1);
 	len = ft_strlen(s1) + ft_strlen(s2);
-	dst = allocate(sizeof(char) * (len + 1), gc);
+	dst = arena_allocate(sizeof(char) * (len + 1), a);
 	if (!dst)
 		return (NULL);
 	dst[len] = '\0';

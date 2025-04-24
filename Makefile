@@ -13,7 +13,7 @@ SRC = char_manip/ft_isalpha.c char_manip/ft_isdigit.c char_manip/ft_isalnum.c\
       str_manip/ft_striteri.c str_manip/ft_countw.c   str_manip/ft_domstr.c\
       str_manip/ft_nullify.c\
       ft_close.c 		gnl.c			     gnl_utils.c\
-      garbage_collector.c       linked_list.c	             ft_gettime.c\
+      arena/arena.c		linked_list.c	             ft_gettime.c\
       ft_fprintf/ft_cprint_fd.c ft_fprintf/ft_cprinthex_fd.c ft_fprintf/ft_fprintf.c\
 
 SRCEXT = .c
@@ -22,7 +22,7 @@ OBJS = $(addprefix $(OBJDIR)/,$(SRC:$(SRCEXT)=$(OBJEXT)))
 OBJOUT = $(addprefix $(OBJDIR)/,$(notdir $(OBJS)))
 CC        = gcc
 RM        = rm -f
-CFLAGS = -Wall -Wextra -Werror -g -I./
+CFLAGS = -Wall -Wextra -Werror -g -I./ -I./arena -I./ft_fprintf
 
 #=====================================
 #===**DO NOT EDIT AFTER THIS LINE**===

@@ -1,6 +1,4 @@
-
-#include "libft.h"
-#include "libgc.h"
+# include <libft.h>
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
@@ -23,13 +21,6 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	*lst = new;
 }
 
-void	ft_lstdelone(t_list *lst, void (*del)(void*))
-{
-	if (!lst || !del)
-		return ;
-	free(lst);
-}
-
 t_list	*ft_lstlast(t_list *lst)
 {
 	if (!lst)
@@ -39,11 +30,11 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-t_list	*ft_lstnew(t_garb *gc, void *data)
+t_list	*ft_lstnew(arena_t *a, void *data)
 {
 	t_list	*lst;
 
-	lst = (t_list *)allocate(sizeof(t_list),gc);
+	lst = (t_list *)arena_allocate(sizeof(t_list),a);
 	if (!lst)
 		return (NULL);
 

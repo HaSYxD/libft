@@ -6,13 +6,13 @@
 /*   By: aliaudet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 10:57:02 by aliaudet          #+#    #+#             */
-/*   Updated: 2024/05/14 16:41:45 by aliaudet         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:43:15 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s, t_garb *gc)
+char	*ft_strdup(const char *s, arena_t *a)
 {
 	char	*dest;
 	int		i;
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *s, t_garb *gc)
 	while (s[i])
 		i++;
 	i += 1;
-	dest = allocate(sizeof(char) * i, gc);
+	dest = arena_allocate(sizeof(char) * i, a);
 	i = 0;
 	if (!dest)
 		return (NULL);

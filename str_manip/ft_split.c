@@ -6,18 +6,18 @@
 /*   By: aliaudet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 10:55:44 by aliaudet          #+#    #+#             */
-/*   Updated: 2024/04/01 15:03:30 by aliaudet         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:48:33 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*get_splitstrs(const char *s, int start, int end, t_garb *gc)
+char *	get_splitstrs(const char *s, int start, int end, arena_t *a)
 {
 	char	*dst;
 	int		i;
 
-	dst = allocate((end - start + 1) * sizeof(char), gc);
+	dst = arena_allocate((end - start + 1) * sizeof(char), a);
 	if (!dst)
 		return (NULL);
 	i = 0;
@@ -27,14 +27,14 @@ char	*get_splitstrs(const char *s, int start, int end, t_garb *gc)
 	return (dst);
 }
 
-char	**ft_split(const char *s, char c, t_garb *gc)
+char **	ft_split(const char *s, char c, arena_t *a)
 {
 	char	**split;
 	size_t	i;
 	size_t	j;
 	int		index;
 
-	split = allocate(sizeof(char *) * (ft_countw(s, c) + 1), gc);
+	split = arena_allocate(sizeof(char *) * (ft_countw(s, c) + 1), a);
 	if (!split)
 		return (NULL);
 	i = 0;
@@ -46,7 +46,7 @@ char	**ft_split(const char *s, char c, t_garb *gc)
 			index = i;
 		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
 		{
-			split[j++] = get_splitstrs(s, index, i, gc);
+			split[j++] = get_splitstrs(s, index, i, a);
 			index = -1;
 		}
 		i++;

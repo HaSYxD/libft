@@ -6,13 +6,13 @@
 /*   By: afromont <afromont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 09:38:00 by aliaudet          #+#    #+#             */
-/*   Updated: 2024/06/17 15:18:05 by afromont         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:49:51 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*clean_stash(char *stash, t_garb *gc)
+char	*clean_stash(char *stash, arena_t *a)
 {
 	char	*dst;
 	int		i;
@@ -24,7 +24,7 @@ char	*clean_stash(char *stash, t_garb *gc)
 		i++;
 	if (!stash[i])
 		return (NULL);
-	dst = allocate(sizeof(char) * (ft_gnlstrlen(stash) - i + 1), gc);
+	dst = arena_allocate(sizeof(char) * (ft_gnlstrlen(stash) - i + 1), a);
 	if (!dst)
 		return (NULL);
 	i++;
@@ -34,7 +34,7 @@ char	*clean_stash(char *stash, t_garb *gc)
 	return (dst);
 }
 
-char	*extract_line(char *stash, t_garb *gc)
+char	*extract_line(char *stash, arena_t *a)
 {
 	char	*dst;
 	int		i;
@@ -44,7 +44,7 @@ char	*extract_line(char *stash, t_garb *gc)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	dst = allocate(sizeof(char) * (i + 2), gc);
+	dst = arena_allocate(sizeof(char) * (i + 2), a);
 	if (!dst)
 		return (NULL);
 	i = 0;
@@ -62,12 +62,12 @@ char	*extract_line(char *stash, t_garb *gc)
 	return (dst);
 }
 
-char	*read_to_stash(int fd, char *stash, t_garb *gc)
+char	*read_to_stash(int fd, char *stash, arena_t *a)
 {
 	char	*buff;
 	int		rd_bytes;
 
-	buff = allocate(sizeof(char) * (GNL_BUFFER_SIZE + 1), gc);
+	buff = arena_allocate(sizeof(char) * (GNL_BUFFER_SIZE + 1), a);
 	if (!buff)
 		return (NULL);
 	rd_bytes = 1;
@@ -77,21 +77,21 @@ char	*read_to_stash(int fd, char *stash, t_garb *gc)
 		if (rd_bytes == -1)
 			return (NULL);
 		buff[rd_bytes] = '\0';
-		stash = ft_gnlstrjoin(stash, buff, gc);
+		stash = ft_gnlstrjoin(stash, buff, a);
 	}
 	return (stash);
 }
 
-int	gnl(int fd, char **line, t_garb *gc)
+int	gnl(int fd, char **line, arena_t *a)
 {
 	static char	*stash;
 
 	if (fd < 0 || GNL_BUFFER_SIZE <= 0)
 		return (-1);
-	stash = read_to_stash(fd, stash, gc);
+	stash = read_to_stash(fd, stash, a);
 	if (!stash)
 		return (0);
-	*line = extract_line(stash, gc);
-	stash = clean_stash(stash, gc);
+	*line = extract_line(stash, a);
+	stash = clean_stash(stash, a);
 	return (ft_strlen(*line));
 }

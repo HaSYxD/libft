@@ -6,7 +6,7 @@
 /*   By: aliaudet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 11:29:01 by aliaudet          #+#    #+#             */
-/*   Updated: 2023/10/26 10:29:26 by aliaudet         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:42:04 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*ft_itoacpy(char *dst, int n, int len)
 	return (dst);
 }
 
-char	*ft_itoa(int n, t_garb *gc)
+char	*ft_itoa(int n, arena_t *a)
 {
 	char	*dst;
 	int		len;
@@ -67,7 +67,7 @@ char	*ft_itoa(int n, t_garb *gc)
 		return (dst);
 	}
 	else
-		dst = allocate(sizeof(char) * (len + 1), gc);
+		dst = arena_allocate(sizeof(char) * (len + 1), a);
 	if (!dst)
 		return (NULL);
 	dst = ft_itoacpy(dst, n, len);

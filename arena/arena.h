@@ -6,7 +6,7 @@
 /*   By: hasyxd <aliaudet@student.42lehavre.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 01:36:49 by hasyxd            #+#    #+#             */
-/*   Updated: 2025/04/24 03:12:26 by hasyxd           ###   ########.fr       */
+/*   Updated: 2025/04/24 13:49:11 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define ARENA_LARGE	(size_t)32768
 # define ARENA_HUGE	(size_t)262144
 
-# define __ARENA_MAX_SIZEBLK	1024000
-# define __ARENA_ERR_DICT	(char *[]){"", "[INIT ERROR]: block size must be a non-zero positive number", \
+# define _ARENA_MAX_SIZEBLK	1024000
+# define _ARENA_ERR_DICT	(char *[]){"", "[INIT ERROR]: block size must be a non-zero positive number", \
 					"[INIT ERROR]: block size must be less than or equal to __ARENA_MAX_SIZEBLK", \
 					"[ALLOC ERROR]: malloc failed to allocate some memory", \
 					"[ALLOC ERROR]: allocation size must be a non-zero positive number", \
@@ -31,7 +31,7 @@
 
 extern uint8_t	g_arena_err;
 
-enum	arena_err_e {
+enum	P_arena_err_e {
 	NONE = 0,
 	INITERR_TOSMALL,
 	INITERR_TOBIG,
@@ -41,14 +41,14 @@ enum	arena_err_e {
 	ARGERR_INVALIDARENA
 };
 
-typedef struct arenablk_s {
-	struct arenablk_s *	_next;
+typedef struct P_arenablk_s {
+	struct P_arenablk_s *	_next;
 	void *			_data;
 	size_t			_capacity;
-}	arenablk_t;
+}	P_arenablk_t;
 
-typedef struct arena_s {
-	arenablk_t *	_blks;
+typedef struct P_arena_s {
+	P_arenablk_t *	_blks;
 	size_t		_blksize;
 }	arena_t;
 
@@ -84,5 +84,8 @@ void	arena_destroy(arena_t *arena);
 //
 // THIS IS NOT TIDED TO A SPECIFIC ARENA BUT TO THE WHOLE APPLICATION !! MULTIPLE ARENA CAN AFFECTE THE RESULT
 char *	arena_geterrlog(const uint8_t err);
+
+// Will return the number of block allocated during the lifetime of the arena
+size_t	arena_getblks_count(arena_t *arena);
 
 #endif

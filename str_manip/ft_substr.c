@@ -6,14 +6,14 @@
 /*   By: aliaudet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 09:03:01 by aliaudet          #+#    #+#             */
-/*   Updated: 2023/10/31 14:23:55 by aliaudet         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:45:08 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 
-char	*ft_substr(const char *s, unsigned int start, size_t len, t_garb *gc)
+char *	ft_substr(const char *s, unsigned int start, size_t len, arena_t *a)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -23,7 +23,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len, t_garb *gc)
 		start = ft_strlen(s);
 	if (ft_strlen(s) - start < len)
 		len = ft_strlen(s) - start;
-	dst = allocate(sizeof(*s) * (len + 1), gc);
+	dst = arena_allocate(sizeof(*s) * (len + 1), a);
 	i = 0;
 	j = 0;
 	if (!dst)
