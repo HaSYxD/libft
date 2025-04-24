@@ -1,5 +1,4 @@
-# include <arena.h>
-# include <libft.h>
+# include "../../libft.h"
 
 int	init_tests()
 {

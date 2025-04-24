@@ -6,7 +6,7 @@
 /*   By: afromont <afromont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:15:24 by aliaudet          #+#    #+#             */
-/*   Updated: 2025/04/24 15:47:52 by hasyxd           ###   ########.fr       */
+/*   Updated: 2025/04/24 16:05:59 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include <stdbool.h>
 
 // LIBRARY MODULES
-# include <arena.h>
-# include <ft_fprintf.h>
+# include "arena/arena.h"
+# include "ft_fprintf/ft_fprintf.h"
 
 typedef struct s_list {
 	struct s_list *	next;
