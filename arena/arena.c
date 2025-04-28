@@ -6,7 +6,7 @@
 /*   By: hasyxd <aliaudet@student.42lehavre.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 01:45:39 by hasyxd            #+#    #+#             */
-/*   Updated: 2025/04/24 14:07:19 by hasyxd           ###   ########.fr       */
+/*   Updated: 2025/04/28 16:26:53 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void *		arena_allocate(const size_t size, arena_t *arena)
 				arena->_blks = start;
 				return __arena_return_err(ALLOCERR_MALLOCFAILED);
 			}
-			allocptr = arena->_blks->_next->_data + arena->_blks->_next->_capacity;
+			allocptr = arena->_blks->_next->_data + size;
 			arena->_blks->_next->_capacity = size;
 			arena->_blks->_next->_next = NULL;
 			break ;
