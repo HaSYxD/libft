@@ -1,5 +1,4 @@
 NAME = libft.a
-OBJDIR = build
 SRC = char_manip/ft_isalpha.c char_manip/ft_isdigit.c char_manip/ft_isalnum.c\
       char_manip/ft_isascii.c char_manip/ft_isprint.c char_manip/ft_toupper.c\
       char_manip/ft_tolower.c\
@@ -18,8 +17,7 @@ SRC = char_manip/ft_isalpha.c char_manip/ft_isdigit.c char_manip/ft_isalnum.c\
 
 SRCEXT = .c
 OBJEXT = .o
-OBJS = $(addprefix $(OBJDIR)/,$(SRC:$(SRCEXT)=$(OBJEXT)))
-OBJOUT = $(addprefix $(OBJDIR)/,$(notdir $(OBJS)))
+OBJS = $(SRC:$(SRCEXT)=$(OBJEXT))
 CC        = gcc
 RM        = rm -f
 CFLAGS = -Wall -Wextra -Werror -g -I./ -I./arena -I./ft_fprintf
@@ -28,25 +26,18 @@ CFLAGS = -Wall -Wextra -Werror -g -I./ -I./arena -I./ft_fprintf
 #===**DO NOT EDIT AFTER THIS LINE**===
 #=====================================
 
-all: directory ${NAME}
-directory:
-	@if ! test -d $(OBJDIR); then\
-		mkdir $(OBJDIR);\
-	fi
+all: ${NAME}
 
 $(NAME): ${OBJS}
-	ar rcs ${NAME} ${OBJOUT}
+	ar rcs ${NAME} ${OBJS}
 
-$(OBJDIR)/%$(OBJEXT): %$(SRCEXT)
-	${CC} ${CFLAGS} -g -c $< -o $(addprefix $(OBJDIR)/,$(notdir $@))
+%$(OBJEXT): %$(SRCEXT)
+	${CC} ${CFLAGS} -g -c $< -o $@
 
 clean:
-	${RM} ${OBJOUT} 
+	${RM} ${OBJS} 
 
 fclean: clean
 	${RM} ${NAME}
-	@if test -d $(OBJDIR); then\
-		rm -rf $(OBJDIR);\
-	fi
 
 re: fclean all
