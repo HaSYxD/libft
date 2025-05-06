@@ -14,8 +14,6 @@
 # define LIBGC_H
 
 # include <stdlib.h>
-# include <stdio.h>
-
 
 typedef struct s_ptr
 {
@@ -29,11 +27,9 @@ typedef struct s_garb
 	size_t	blocks_num;
 }	t_garb;
 
-t_ptr	*add_to_collector(void *data, t_ptr *alloc_ptr);
-
-void	*allocate(size_t size, t_garb *collector);
+void *	allocate(size_t size, t_garb *collector);
 void	clean_garbage(t_garb *collector);
 void	deallocate(void *ptr, t_garb *collector);
-void *reallocate(size_t size, void *ptr, t_garb *collector);
+void *	reallocate(size_t size, void *ptr, t_garb *collector);
 
 #endif

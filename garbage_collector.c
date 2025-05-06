@@ -10,44 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+# include "libgc.h"
+# include "ft_fprintf/ft_fprintf.h"
 
-t_ptr	*add_to_collector(void *data, t_ptr *alloc_ptr)
+static t_ptr *	add_to_collector(void *data, t_ptr *alloc_ptr)
 {
-	t_ptr	*new_ptr;
+	t_ptr *	new_ptr;
 
 	new_ptr = malloc(sizeof(t_ptr));
-	if (!new_ptr)
-	{
+	if (!new_ptr) {
 		if (DEBUG)
-			ft_fprintf(2, "[%sERROR%s]Failed to add pointer :\"%p\" to "
-				"garbage collection\n", C_RED, C_DEFAULT, data);
+			ft_fprintf(2, "[%sERROR%s]Failed to add pointer :\"%p\" to garbage collection\n", C_RED, C_DEFAULT, data);
 		return (alloc_ptr);
 	}
 	new_ptr->next = alloc_ptr;
 	new_ptr->data = data;
 	if (DEBUG)
-		ft_fprintf(1, "[%sINFO%s]Pointer \"%s%p%s\" previously"
-			" allocated as been added to the garbage colletor\n",
-			C_CYAN, C_DEFAULT, C_YELLOW, new_ptr->data, C_DEFAULT);
+		ft_fprintf(1, "[%sINFO%s]Pointer \"%s%p%s\" previously allocated as been added to the garbage colletor\n", C_CYAN, C_DEFAULT, C_YELLOW, new_ptr->data, C_DEFAULT);
 	return (new_ptr);
 }
 
 void	deallocate(void *ptr, t_garb *collector)
 {
-	t_ptr	*data_buff;
-	t_ptr	*buff;
+	t_ptr *	data_buff = NULL;
+	t_ptr *	buff = collector->alloc_ptr;
 
-	data_buff = NULL;
-	buff = collector->alloc_ptr;
-	while (collector->alloc_ptr->next)
-	{
-		if (ptr == collector->alloc_ptr->next->data)
-		{
+	while (collector->alloc_ptr->next) {
+		if (ptr == collector->alloc_ptr->next->data) {
 			if (DEBUG)
-				ft_fprintf(1, "[%sINFO%s] Pointer \"%s%p%s\" \
-					as been de-allocated at run-time\n",
-					C_CYAN, C_DEFAULT, C_YELLOW, ptr, C_DEFAULT);
+				ft_fprintf(1, "[%sINFO%s] Pointer \"%s%p%s\ as been de-allocated at run-time\n", C_CYAN, C_DEFAULT, C_YELLOW, ptr, C_DEFAULT);
 			free(collector->alloc_ptr->next->data);
 			if (collector->alloc_ptr->next->next)
 				data_buff = collector->alloc_ptr->next->next;
@@ -61,24 +52,19 @@ void	deallocate(void *ptr, t_garb *collector)
 	collector->alloc_ptr = buff;
 }
 
-void	*allocate(size_t size, t_garb *collector)
+void *	allocate(size_t size, t_garb *collector)
 {
-	void	*new;
+	void *	new = malloc(size);
 
-	new = malloc(size);
-	if (!new)
-	{
+	if (!new) {
 		if (DEBUG)
-			ft_fprintf(2, "[%sERROR%s]Failed To allocate block of size : %ld\n",
-				C_RED, C_DEFAULT, size);
+			ft_fprintf(2, "[%sERROR%s]Failed To allocate block of size : %ld\n", C_RED, C_DEFAULT, size);
 		return (NULL);
 	}
 	if (DEBUG)
-		ft_fprintf(1, "[%sINFO%s]Block of size : %ld as been allcated "
-			"succesfully\n", C_CYAN, C_DEFAULT, size);
+		ft_fprintf(1, "[%sINFO%s]Block of size : %ld as been allcated succesfully\n", C_CYAN, C_DEFAULT, size);
 	collector->alloc_ptr = add_to_collector(new, collector->alloc_ptr);
-	if (!collector->alloc_ptr)
-	{
+	if (!collector->alloc_ptr) {
 		free(new);
 		return (NULL);
 	}
@@ -88,22 +74,16 @@ void	*allocate(size_t size, t_garb *collector)
 
 void	clean_garbage(t_garb *collector)
 {
-	t_ptr	*buff;
+	t_ptr *	buff = collector->alloc_ptr->next;
 
-	if (!collector->alloc_ptr)
-	{
+	if (!collector->alloc_ptr) {
 		if (DEBUG)
-			ft_fprintf(1, "[%sSUCCES%s] All data as been free'd succesfully\n",
-				C_GREEN, C_DEFAULT);
+			ft_fprintf(1, "[%sSUCCES%s] All data as been free'd succesfully\n", C_GREEN, C_DEFAULT);
 		return ;
 	}
-	buff = collector->alloc_ptr->next;
-	if (collector->alloc_ptr->data && collector->alloc_ptr)
-	{
+	if (collector->alloc_ptr->data && collector->alloc_ptr) {
 		if (DEBUG)
-			ft_fprintf(1, "[%sINFO%s] Data at pointer \"%s%p%s\" as been free'd\n",
-				C_CYAN, C_DEFAULT, C_YELLOW,
-				collector->alloc_ptr->data, C_DEFAULT);
+			ft_fprintf(1, "[%sINFO%s] Data at pointer \"%s%p%s\" as been free'd\n", C_CYAN, C_DEFAULT, C_YELLOW, collector->alloc_ptr->data, C_DEFAULT);
 		free(collector->alloc_ptr->data);
 		free(collector->alloc_ptr);
 		collector->blocks_num--;

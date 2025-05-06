@@ -10,21 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# include "libft.h"
 
-char	*clean_stash(char *stash, arena_t *a)
+char *	clean_stash(char *stash, alloc_ctx_t ctx)
 {
-	char	*dst;
-	int		i;
-	int		j;
+	char *	dst;
+	int	i = 0;
+	int	j = 0;
 
-	i = 0;
-	j = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
 	if (!stash[i])
 		return (NULL);
-	dst = arena_allocate(sizeof(char) * (ft_gnlstrlen(stash) - i + 1), a);
+	dst = alloc(sizeof(char) * (ft_gnlstrlen(stash) - i + 1), ctx._allocptr, ctx._type);
 	if (!dst)
 		return (NULL);
 	i++;
@@ -34,7 +32,7 @@ char	*clean_stash(char *stash, arena_t *a)
 	return (dst);
 }
 
-char	*extract_line(char *stash, arena_t *a)
+char *	extract_line(char *stash, alloc_ctx_t ctx)
 {
 	char	*dst;
 	int		i;
@@ -44,7 +42,7 @@ char	*extract_line(char *stash, arena_t *a)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	dst = arena_allocate(sizeof(char) * (i + 2), a);
+	dst = alloc(sizeof(char) * (i + 2), ctx._allocptr, ctx._type);
 	if (!dst)
 		return (NULL);
 	i = 0;
@@ -62,36 +60,34 @@ char	*extract_line(char *stash, arena_t *a)
 	return (dst);
 }
 
-char	*read_to_stash(int fd, char *stash, arena_t *a)
+char *	read_to_stash(int fd, char *stash, alloc_ctx_t ctx)
 {
-	char	*buff;
-	int		rd_bytes;
+	char *	buff;
+	int	rd_bytes = 1;
 
-	buff = arena_allocate(sizeof(char) * (GNL_BUFFER_SIZE + 1), a);
+	buff = alloc(sizeof(char) * (GNL_BUFFER_SIZE + 1), ctx._allocptr, ctx._type);
 	if (!buff)
 		return (NULL);
-	rd_bytes = 1;
-	while (!ft_gnlstrchr(stash, '\n') && rd_bytes != 0)
-	{
+	while (!ft_gnlstrchr(stash, '\n') && rd_bytes != 0) {
 		rd_bytes = read(fd, buff, GNL_BUFFER_SIZE);
 		if (rd_bytes == -1)
 			return (NULL);
 		buff[rd_bytes] = '\0';
-		stash = ft_gnlstrjoin(stash, buff, a);
+		stash = ft_gnlstrjoin(stash, buff, ctx);
 	}
 	return (stash);
 }
 
-int	gnl(int fd, char **line, arena_t *a)
+int	gnl(int fd, char **line, alloc_ctx_t ctx)
 {
-	static char	*stash;
+	static char *	stash;
 
 	if (fd < 0 || GNL_BUFFER_SIZE <= 0)
 		return (-1);
-	stash = read_to_stash(fd, stash, a);
+	stash = read_to_stash(fd, stash, ctx);
 	if (!stash)
 		return (0);
-	*line = extract_line(stash, a);
-	stash = clean_stash(stash, a);
+	*line = extract_line(stash, ctx);
+	stash = clean_stash(stash, ctx);
 	return (ft_strlen(*line));
 }

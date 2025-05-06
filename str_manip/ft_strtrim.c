@@ -12,18 +12,17 @@
 
 #include "libft.h"
 
-char	*ft_strtrim(const char *s1, const char *set, arena_t *a)
+char *	ft_strtrim(const char *s1, const char *set, alloc_ctx_t ctx)
 {
-	char	*dst;
-	size_t	len;
+	char *	dst;
+	size_t	len = 0;
 
-	len = 0;
 	while (*s1 && ft_strchr(set, *s1))
 		s1++;
 	len = ft_strlen(s1);
 	while (len && ft_strchr(set, s1[len - 1]))
 		len--;
-	dst = arena_allocate(len + 1, a);
+	dst = alloc(len + 1, ctx._allocptr, ctx._type);
 	if (dst)
 		ft_strlcpy(dst, s1, len + 1);
 	return (dst);

@@ -24,7 +24,7 @@ size_t	ft_gnlstrlen(const char *str)
 	return (i);
 }
 
-char	*ft_gnlstrjoin(char *s1, char *s2, arena_t *a)
+char	*ft_gnlstrjoin(char *s1, char *s2, alloc_ctx_t ctx)
 {
 	size_t	i;
 	size_t	j;
@@ -32,12 +32,12 @@ char	*ft_gnlstrjoin(char *s1, char *s2, arena_t *a)
 
 	if (!s1)
 	{
-		s1 = arena_allocate(1 * sizeof(char), a);
+		s1 = alloc(1 * sizeof(char), ctx._allocptr, ctx._type);
 		s1[0] = '\0';
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	dst = arena_allocate(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1), a);
+	dst = alloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1), ctx._allocptr, ctx._type);
 	if (!dst)
 		return (NULL);
 	i = -1;

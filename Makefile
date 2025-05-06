@@ -14,6 +14,7 @@ SRC = char_manip/ft_isalpha.c char_manip/ft_isdigit.c char_manip/ft_isalnum.c\
       ft_close.c 		gnl.c			     gnl_utils.c\
       arena/arena.c		linked_list.c	             ft_gettime.c\
       ft_fprintf/ft_cprint_fd.c ft_fprintf/ft_cprinthex_fd.c ft_fprintf/ft_fprintf.c\
+      alloc_api.c
 
 SRCEXT = .c
 OBJEXT = .o

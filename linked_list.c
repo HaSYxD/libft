@@ -21,7 +21,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	*lst = new;
 }
 
-t_list	*ft_lstlast(t_list *lst)
+t_list *	ft_lstlast(t_list *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -30,14 +30,13 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-t_list	*ft_lstnew(arena_t *a, void *data)
+t_list *	ft_lstnew(alloc_ctx_t ctx, void *data)
 {
 	t_list	*lst;
 
-	lst = (t_list *)arena_allocate(sizeof(t_list),a);
+	lst = alloc(sizeof(t_list), ctx._allocptr, ctx._type);
 	if (!lst)
-		return (NULL);
-
+		return (ft_fprintf(2, "ft_lstnew:\n%s\n", arena_geterrlog(g_arena_err)), NULL);
 	lst->data = data;
 	lst->next = NULL;
 	return (lst);

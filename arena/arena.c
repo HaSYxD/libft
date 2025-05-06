@@ -6,11 +6,12 @@
 /*   By: hasyxd <aliaudet@student.42lehavre.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 01:45:39 by hasyxd            #+#    #+#             */
-/*   Updated: 2025/04/28 16:26:53 by hasyxd           ###   ########.fr       */
+/*   Updated: 2025/05/02 16:16:24 by hasyxd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <arena.h>
+# include <ft_fprintf.h>
 
 uint8_t	g_arena_err = NONE;
 
@@ -85,6 +86,7 @@ void *		arena_allocate(const size_t size, arena_t *arena)
 			allocptr = arena->_blks->_next->_data + size;
 			arena->_blks->_next->_capacity = size;
 			arena->_blks->_next->_next = NULL;
+			//-ft_fprintf(1, "new block\n");
 			break ;
 		}
 		else if (size <= free_mem) {
@@ -100,8 +102,9 @@ void *		arena_allocate(const size_t size, arena_t *arena)
 
 void		arena_destroy(arena_t *arena)
 {
-	if (arena == NULL)
+	if (arena == NULL) {
 		return (void)__arena_return_err(ARGERR_INVALIDARENA);
+	}
 
 	while (arena->_blks) {
 		P_arenablk_t *	next = arena->_blks->_next;
