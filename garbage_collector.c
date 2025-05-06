@@ -74,13 +74,13 @@ void *	allocate(size_t size, t_garb *collector)
 
 void	clean_garbage(t_garb *collector)
 {
-	t_ptr *	buff = collector->alloc_ptr->next;
-
 	if (!collector->alloc_ptr) {
 		if (DEBUG)
 			ft_fprintf(1, "[%sSUCCES%s] All data as been free'd succesfully\n", C_GREEN, C_DEFAULT);
 		return ;
 	}
+	t_ptr *	buff = collector->alloc_ptr->next;
+
 	if (collector->alloc_ptr->data && collector->alloc_ptr) {
 		if (DEBUG)
 			ft_fprintf(1, "[%sINFO%s] Data at pointer \"%s%p%s\" as been free'd\n", C_CYAN, C_DEFAULT, C_YELLOW, collector->alloc_ptr->data, C_DEFAULT);
