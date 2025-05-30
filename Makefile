@@ -19,7 +19,8 @@ SRC = char_manip/ft_isalpha.c char_manip/ft_isdigit.c char_manip/ft_isalnum.c\
 SRCEXT = .c
 OBJEXT = .o
 OBJS = $(SRC:$(SRCEXT)=$(OBJEXT))
-CC        = gcc
+CC        = clang
+AR	  = ar
 RM        = rm -f
 CFLAGS = -Wall -Wextra -Werror -g -I./ -I./arena -I./ft_fprintf
 
@@ -29,8 +30,8 @@ CFLAGS = -Wall -Wextra -Werror -g -I./ -I./arena -I./ft_fprintf
 
 all: ${NAME}
 
-$(NAME): ${OBJS}
-	ar rcs ${NAME} ${OBJS}
+$(NAME): $(OBJS)
+	$(AR) rcs $(NAME) ${OBJS}
 
 %$(OBJEXT): %$(SRCEXT)
 	${CC} ${CFLAGS} -g -c $< -o $@
@@ -40,5 +41,6 @@ clean:
 
 fclean: clean
 	${RM} ${NAME}
+	$(RM) libft-desktop.a libft-web.a
 
 re: fclean all
