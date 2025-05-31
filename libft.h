@@ -95,6 +95,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	ft_countw(const char *s, char c);
 int	ft_strcmp(const char *s1, const char *s2);
 int	ft_atoi(const char *str);
+float	ft_atof(const char *str);
 
 int	ft_isalnum(int c);
 int	ft_isalpha(int c);

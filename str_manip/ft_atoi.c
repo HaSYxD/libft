@@ -40,3 +40,31 @@ int	ft_atoi(const char *str)
 		res = -res;
 	return (res);
 }
+
+float	ft_atof(const char *str)
+{
+	// Get the integer part of the float
+	double	intPart = ft_atoi(str);
+
+	// Check if there is a point in the number
+	int	lenToPoint = 0;
+	while (str[lenToPoint] && str[lenToPoint] != '.')
+		lenToPoint++;
+	if (lenToPoint == (int)ft_strlen(str))
+		return (intPart);
+	lenToPoint++;
+
+	// Check the length of the correct decimal part
+	int	decPartLen = 0;
+	while (str[decPartLen + lenToPoint] && ft_isdigit(str[decPartLen + lenToPoint]))
+		decPartLen++;
+	if (!decPartLen)
+		return (intPart);
+
+	// Count the power of the decimal part to correctly assemble the final float
+	double	decPart = ft_atoi(str + lenToPoint);
+	int	div = 1;
+	for (; decPartLen; decPartLen--)
+		div *= 10;
+	return intPart + (decPart / div);
+}
